@@ -5,17 +5,25 @@ import Entity from './entities/Entity'
 import Enemy from './entities/Enemy'
 import Path from './entities/Path'
 import V from './lib/vec2'
+import Spot from './entities/Spot'
 
 const SPRITESHEET = 'spritesheet.json'
 
-const path = {
-  start: { x: -1, y: 7 },
-  steps: [
-    V(9, 0),
-    V(0, 4),
-    V(4, 0),
-    V(0, 2),
-    V(8, 0),
+const level = {
+  path: {
+    start: { x: -1, y: 7 },
+    steps: [
+      V(9, 0),
+      V(0, 4),
+      V(4, 0),
+      V(0, 2),
+      V(8, 0),
+    ]
+  },
+  spots: [
+    { x: 95, y: 83 },
+    { x: 95, y: 90 },
+    { x: 88, y: 76 }
   ]
 }
 
@@ -33,12 +41,14 @@ function start() {
     Entity.init(app.stage, textures)
 
 
-    new Enemy(path)
+    new Enemy(level.path)
     setInterval(() => {
-      new Enemy(path)
-    }, 4000)
+      new Enemy(leve.path)
+    }, 10000)
 
-    Path.create(path)
+    level.spots.forEach(spot => new Spot(spot.x, spot.y))
+
+    Path.create(level.path)
 
     function gameLoop(dt) {
       Entity.updateAll(dt)
