@@ -14,15 +14,10 @@ export default class Enemy extends Entity {
     this.path = path
     this.timer = 0
 
-    this.originalHeight = this.sprite.height
-
     this.speed = 0.09
   }
 
   update(dt) {
-    this.sprite.height = this.originalHeight - 0.15 * this.originalHeight * (1 + Math.sin(this.timer / 13))
-    this.timer += dt
-
     this.setPosition(this.pos.add(this.direction.multiply(this.speed * dt)))
     this.stepCount -= this.speed * dt
     if (this.stepCount < 1) {
