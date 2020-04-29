@@ -3,9 +3,21 @@ import WebFont from 'webfontloader'
 import parseTextures from './lib/parse-textures'
 import Entity from './entities/Entity'
 import Enemy from './entities/Enemy'
-import { times, random } from 'lodash'
+import Path from './entities/Path'
+import V from './lib/vec2'
 
 const SPRITESHEET = 'spritesheet.json'
+
+const path = {
+  start: { x: -1, y: 7 },
+  steps: [
+    V(9, 0),
+    V(0, 4),
+    V(4, 0),
+    V(0, 2),
+    V(8, 0),
+  ]
+}
 
 function start() {
   const app = createApp()
@@ -20,15 +32,9 @@ function start() {
 
     Entity.init(app.stage, textures)
 
-    new Enemy(10, 10, { sprite: 'enemy' })
+    new Enemy(path)
 
-    times(25).forEach((i) => {
-      new Entity(60, 6 * i, { sprite: 'path' + random(1, 8) })
-      new Entity(6 * i, 60, {
-        sprite: 'path' + random(1, 8),
-        spriteAngle: 90,
-      })
-    })
+    Path.create(path)
 
     function gameLoop(dt) {
       Entity.updateAll(dt)
