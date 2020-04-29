@@ -5,9 +5,6 @@ export default class Spot extends Entity {
   constructor(x, y, opts = {}) {
     super(x, y, { sprite: 'selection-circle', spriteAnchor: [0, 0], ...opts })
 
-
-    this.sprite.hitArea = new PIXI.Rectangle(-3, 0, 4, 4)
-
     this.sprite.interactive = true
     this.sprite.buttonMode = true
 

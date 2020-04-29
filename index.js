@@ -57,8 +57,8 @@ function start() {
 
 function createApp() {
   const app = new PIXI.Application({
-    width: 166,
-    height: 144,
+    width: 166 * Entity.SCALE_FACTOR,
+    height: 144 * Entity.SCALE_FACTOR,
     backgroundColor: 0xfff6d3,
     antialias: false,
   })

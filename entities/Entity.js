@@ -17,8 +17,8 @@ export default class Entity {
     this.tags = tags
     this.addTag(sprite)
     this.sprite = Entity.createSprite(
-      x,
-      y,
+      x * Entity.SCALE_FACTOR,
+      y * Entity.SCALE_FACTOR,
       sprite,
       animationSpeed,
       spriteAnchor,
@@ -28,7 +28,7 @@ export default class Entity {
     Entity.create(this)
   }
 
-  update(dt) {}
+  update(dt) { }
 
   setPosition(x, y) {
     if (!y) {
@@ -39,8 +39,8 @@ export default class Entity {
     this.pos.y = y
 
     if (this.sprite) {
-      this.sprite.x = x
-      this.sprite.y = y
+      this.sprite.x = Entity.SCALE_FACTOR * x
+      this.sprite.y = Entity.SCALE_FACTOR * y
       this.sprite.zIndex = y
     }
   }
@@ -75,6 +75,8 @@ export default class Entity {
   static children = []
 
   static world
+
+  static SCALE_FACTOR = 8
 
   static textures
 
@@ -127,6 +129,7 @@ export default class Entity {
     sprite.y = y
     sprite.zIndex = y
     sprite.angle = spriteAngle
+    sprite.scale = {x: Entity.SCALE_FACTOR, y: Entity.SCALE_FACTOR}
 
     sprite.anchor.set(spriteAnchor[0], spriteAnchor[1])
 

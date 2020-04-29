@@ -13,7 +13,7 @@ export default class Enemy extends Entity {
 
     this.path = path
 
-    this.speed = 0.05
+    this.speed = 0.09
   }
 
   update(dt) {
