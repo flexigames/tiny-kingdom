@@ -5,7 +5,9 @@ import Path from './Path'
 export default class Enemy extends Entity {
   constructor(path) {
     const { start } = path
-    super(start.x * Path.TILE_SIZE + 5, start.y * Path.TILE_SIZE + 6, { sprite: 'enemy' })
+    super(start.x * Path.TILE_SIZE + 5, start.y * Path.TILE_SIZE + 6, {
+      sprite: 'enemy',
+    })
 
     this.stepIndex = 0
     this.direction = path.steps[this.stepIndex].normalize()
