@@ -1,6 +1,7 @@
 import Entity from "./Entity"
 import { times, random } from 'lodash'
 import Castle from "./Castle"
+import V from "../lib/vec2"
 
 
 export default class Path extends Entity {
@@ -14,7 +15,7 @@ export default class Path extends Entity {
   static TILE_SIZE = 7
 
   static create(path) {
-    const pos = path.start
+    const pos = V(path.start.x, path.start.y)
     path.steps.forEach(step => {
       if (step.y) {
         times(step.y + 1).forEach(i => new Path(pos.x * Path.TILE_SIZE, (pos.y + i) * Path.TILE_SIZE))

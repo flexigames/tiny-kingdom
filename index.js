@@ -32,7 +32,11 @@ function start() {
 
     Entity.init(app.stage, textures)
 
+
     new Enemy(path)
+    setInterval(() => {
+      new Enemy(path)
+    }, 4000)
 
     Path.create(path)
 
