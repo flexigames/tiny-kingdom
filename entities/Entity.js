@@ -1,6 +1,6 @@
-import V from "../lib/vec2"
-import * as PIXI from "pixi.js"
-import { isArray } from "lodash"
+import V from '../lib/vec2'
+import * as PIXI from 'pixi.js'
+import { isArray } from 'lodash'
 
 export default class Entity {
   constructor(x, y, opts = {}) {
@@ -9,6 +9,7 @@ export default class Entity {
       sprite,
       animationSpeed = 0,
       spriteAnchor = [0.5, 1],
+      spriteAngle = 0,
     } = opts
 
     this.pos = V(x, y)
@@ -20,7 +21,8 @@ export default class Entity {
       y,
       sprite,
       animationSpeed,
-      spriteAnchor
+      spriteAnchor,
+      spriteAngle
     )
 
     Entity.create(this)
@@ -66,7 +68,7 @@ export default class Entity {
     }
   }
 
-  addTag (tag) {
+  addTag(tag) {
     this.tags.push(tag)
   }
 
@@ -103,7 +105,14 @@ export default class Entity {
     Entity.children = []
   }
 
-  static createSprite(x, y, textureName, animationSpeed = 0, spriteAnchor = [0.5, 1]) {
+  static createSprite(
+    x,
+    y,
+    textureName,
+    animationSpeed = 0,
+    spriteAnchor = [0.5, 1],
+    spriteAngle = 0
+  ) {
     let sprite
     const texture = Entity.textures[textureName]
     if (isArray(texture)) {
@@ -117,6 +126,7 @@ export default class Entity {
     sprite.x = x
     sprite.y = y
     sprite.zIndex = y
+    sprite.angle = spriteAngle
 
     sprite.anchor.set(spriteAnchor[0], spriteAnchor[1])
 
