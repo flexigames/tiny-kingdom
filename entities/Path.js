@@ -26,6 +26,6 @@ export default class Path extends Entity {
         pos.x = pos.x + step.x
       }
     })
-    new Castle(pos.x * Path.TILE_SIZE, pos.y * Path.TILE_SIZE + 15)
+    new Castle(pos.x * Path.TILE_SIZE, pos.y * Path.TILE_SIZE + 16)
   }
 }
