@@ -7,7 +7,10 @@ export default class Enemy extends Entity {
     const { start } = path
     super(start.x * Path.TILE_SIZE + 5, start.y * Path.TILE_SIZE + 6, {
       sprite: 'enemy',
+      tags: ['enemy']
     })
+
+    this.health = 10
 
     this.stepIndex = 0
     this.direction = path.steps[this.stepIndex].normalize()
@@ -16,10 +19,31 @@ export default class Enemy extends Entity {
     this.path = path
     this.timer = 0
 
+    this.flashTime = 20
+
     this.speed = 0.09
   }
 
+  takeDamage(damage) {
+    this.flashDamage()
+    this.health -= damage
+    if (this.health <= 0) {
+      this.destroy()
+    }
+  }
+
+  flashDamage() {
+    this.sprite.tint = 0xEC6C70
+    this.flashCounter = this.flashTime
+  }
+
   update(dt) {
+    if (this.flashCounter >= 0) {
+      this.flashCounter -= dt
+    } else {
+      this.sprite.tint = 0xffffff
+    }
+  
     this.setPosition(this.pos.add(this.direction.multiply(this.speed * dt)))
     this.stepCount -= this.speed * dt
     if (this.stepCount < 1) {

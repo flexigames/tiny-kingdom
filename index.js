@@ -21,6 +21,7 @@ const level = {
     ]
   },
   spots: [
+    { x: 30, y: 44 },
     { x: 92, y: 86 },
     { x: 85, y: 72 }
   ]
@@ -42,7 +43,7 @@ function start() {
 
     new Enemy(level.path)
     setInterval(() => {
-      new Enemy(leve.path)
+      new Enemy(level.path)
     }, 10000)
 
     level.spots.forEach(spot => new Spot(spot.x, spot.y))

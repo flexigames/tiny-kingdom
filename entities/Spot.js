@@ -1,5 +1,6 @@
 import Entity from './Entity'
 import * as PIXI from 'pixi.js'
+import Tower from './Tower'
 
 export default class Spot extends Entity {
   constructor(x, y, opts = {}) {
@@ -10,10 +11,10 @@ export default class Spot extends Entity {
     this.sprite.cursor = 'url("assets/cursor-hover.png"), pointer'
 
     this.sprite.on('mouseup', () => {
-      this.changeTexture('tower1')
+      new Tower(this.pos.x + 3, this.pos.y + 9)
+      this.sprite.visible = false
       this.sprite.interactive = false
       this.sprite.buttonMode = false
-      this.setPosition(this.pos.x, this.pos.y - 5)
     })
   }
 }
