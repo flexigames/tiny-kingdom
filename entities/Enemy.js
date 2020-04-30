@@ -3,11 +3,12 @@ import V from '../lib/vec2'
 import Path from './Path'
 
 export default class Enemy extends Entity {
-  constructor(path) {
-    const { start } = path
-    super(start.x * Path.TILE_SIZE + 5, start.y * Path.TILE_SIZE + 6, {
+  constructor(x, y, opts = {}) {
+    const {path} = opts
+    super(x, y, {
       sprite: 'enemy',
-      tags: ['enemy']
+      tags: ['enemy'],
+      ...opts
     })
 
     this.health = 10

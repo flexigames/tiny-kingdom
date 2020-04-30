@@ -28,7 +28,9 @@ export default class Entity {
     Entity.create(this)
   }
 
-  update(dt) { }
+  update(dt) { 
+
+  }
 
   setPosition(x, y) {
     if (!y) {

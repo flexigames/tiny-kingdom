@@ -7,6 +7,8 @@ import Path from './entities/Path'
 import V from './lib/vec2'
 import Spot from './entities/Spot'
 import HUD from './lib/HUD'
+import Waves from './lib/Waves'
+import Scheduler from './lib/Scheduler'
 
 const SPRITESHEET = 'spritesheet.json'
 
@@ -25,6 +27,11 @@ const level = {
     { x: 30, y: 44 },
     { x: 92, y: 86 },
     { x: 85, y: 72 }
+  ],
+  waves: [
+    { n: 1, time: 0 },
+    { n: 2, time: 10 },
+    { n: 3, time: 15 }
   ]
 }
 
@@ -41,21 +48,21 @@ function start() {
 
     Entity.init(app.stage, textures)
 
-
-    new Enemy(level.path)
-    setInterval(() => {
-      new Enemy(level.path)
-    }, 10000)
+    const scheduler = new Scheduler()
+    const waves = new Waves(level.waves, level.path, scheduler)
 
     level.spots.forEach(spot => new Spot(spot.x, spot.y))
 
     Path.create(level.path)
+
 
     const hud = new HUD(app.stage)
 
     function gameLoop(dt) {
       Entity.updateAll(dt)
       hud.update(dt)
+      waves.update(dt)
+      scheduler.update(dt)
     }
   }
 }
