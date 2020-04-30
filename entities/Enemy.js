@@ -25,6 +25,7 @@ export default class Enemy extends Entity {
   }
 
   takeDamage(damage) {
+    Entity.global.money++
     this.flashDamage()
     this.health -= damage
     if (this.health <= 0) {

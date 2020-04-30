@@ -76,6 +76,10 @@ export default class Entity {
 
   static world
 
+  static global = {
+    money: 0
+  }
+
   static SCALE_FACTOR = 8
 
   static textures

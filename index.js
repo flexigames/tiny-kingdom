@@ -6,6 +6,7 @@ import Enemy from './entities/Enemy'
 import Path from './entities/Path'
 import V from './lib/vec2'
 import Spot from './entities/Spot'
+import HUD from './lib/HUD'
 
 const SPRITESHEET = 'spritesheet.json'
 
@@ -50,8 +51,11 @@ function start() {
 
     Path.create(level.path)
 
+    const hud = new HUD(app.stage)
+
     function gameLoop(dt) {
       Entity.updateAll(dt)
+      hud.update(dt)
     }
   }
 }
