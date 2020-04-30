@@ -77,7 +77,7 @@ export default class Entity {
   static world
 
   static global = {
-    money: 0
+    money: 10
   }
 
   static SCALE_FACTOR = 8
