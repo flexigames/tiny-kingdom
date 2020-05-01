@@ -49,8 +49,6 @@ export default class Path extends Entity {
 
     const potentialSpots = getPotentialSpots(start, steps)
 
-    console.log(potentialSpots)
-
     const path = { start, steps, potentialSpots }
 
     Path.create(path)
