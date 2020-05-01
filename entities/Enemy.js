@@ -22,7 +22,7 @@ export default class Enemy extends Entity {
 
     this.flashTime = 20
 
-    this.speed = 0.09
+    this.speed = 0.12
   }
 
   takeDamage(damage) {
@@ -54,6 +54,9 @@ export default class Enemy extends Entity {
         this.turn()
       } else {
         this.direction = V(0, 0)
+        const castle = Entity.findOne('castle')
+        castle.takeHit()
+        this.destroy()
       }
     }
   }

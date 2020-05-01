@@ -59,15 +59,8 @@ export default class Entity {
     Entity.world.addChild(object)
   }
 
-  changeTexture(textureName, sprite) {
-    sprite = sprite || this.sprite
-    const texture = Entity.textures[textureName]
-    if (isArray(texture)) {
-      this.sprite.textures = texture
-      this.sprite.play()
-    } else {
-      this.sprite.texture = texture
-    }
+  changeTexture(textureName) {
+    Entity.changeTexture(this.sprite, textureName)
   }
 
   addTag(tag) {
@@ -109,6 +102,17 @@ export default class Entity {
 
   static clear() {
     Entity.children = []
+  }
+
+
+  static changeTexture(sprite, textureName) {
+    const texture = Entity.textures[textureName]
+    if (isArray(texture)) {
+      sprite.textures = texture
+      sprite.play()
+    } else {
+      sprite.texture = texture
+    }
   }
 
   static createSprite(
