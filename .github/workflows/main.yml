@@ -24,7 +24,7 @@ jobs:
       env:
             BUTLER_CREDENTIALS: ${{ secrets.BUTLER_CREDENTIALS }}
             CHANNEL: web
-            ITCH_GAME: test
-            ITCH_USER: finnp
+            ITCH_GAME: tiny-kingdom
+            ITCH_USER: lexenson
             PACKAGE: dist
 
