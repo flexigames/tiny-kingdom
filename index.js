@@ -25,13 +25,12 @@ function start() {
     app.stage.addChild(world)
 
     Entity.init(world, textures)
-    const game = new Game()
 
-    const hud = new HUD(app.stage)
+    const game = new Game({stage: app.stage})
+
 
     function gameLoop(dt) {
       Entity.updateAll(dt)
-      hud.update(dt)
       game.update(dt)
     }
   }

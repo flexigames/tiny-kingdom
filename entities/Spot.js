@@ -11,7 +11,7 @@ export default class Spot extends Entity {
     this.sprite.cursor = 'url("assets/cursor-hover.png"), pointer'
 
     this.sprite.on('mouseup', () => {
-      if (Entity.global.money >= Tower.price) {
+      if (Entity.level.money >= Tower.price) {
         new Tower(this.pos.x + 3, this.pos.y + 9)
         this.sprite.visible = false
         this.sprite.interactive = false

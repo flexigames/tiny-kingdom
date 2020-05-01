@@ -4,7 +4,7 @@ import Entity from "./Entity"
 export default class Tower extends Entity {
     constructor(x, y, opts = {}) {
         super(x, y, {sprite: 'tower1', ...opts})
-        Entity.global.money -= Tower.price
+        Entity.level.money -= Tower.price
 
         this.fireRate = 30
         this.radius = 10
@@ -12,7 +12,7 @@ export default class Tower extends Entity {
 
         this.firePause = 0
 
-        this.createCircle()
+        // this.createCircle()
     }
 
     static price = 10
