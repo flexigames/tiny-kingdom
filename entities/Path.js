@@ -1,10 +1,10 @@
 import Entity from "./Entity"
-import { times, random, clamp, sample } from 'lodash'
+import { times, random, clamp, sample, uniqBy } from 'lodash'
 import Castle from "./Castle"
 import V from "../lib/vec2"
 
-const gameHeight = 18
-const gameWidth = 20
+const gridHeight = 18
+const gridWidth = 20
 
 export default class Path extends Entity {
   constructor(x, y, opts = {}) {
@@ -34,32 +34,57 @@ export default class Path extends Entity {
   }
 
   static generate() {
-      const startY = clamp(random(gameHeight), 2, gameHeight)
-      const endY = clamp(random(gameHeight), 5, gameHeight)
+    const startY = clamp(random(gridHeight), 2, gridHeight)
+    const endY = clamp(random(gridHeight), 5, gridHeight)
 
-      const start = V(-1, startY)
-      const firstCorner = V(1, startY)
-      const end = V(gameWidth, endY)
+    const start = V(-1, startY)
+    const firstCorner = V(1, startY)
+    const end = V(gridWidth, endY)
 
-      const xCossing = sample(times(gameWidth - 2)) + 2
-      const yCrossing = random(2, gameHeight)
-      const randomPoint = V(xCossing, yCrossing)
+    const xCossing = sample(times(gridWidth - 2)) + 2
+    const yCrossing = random(1, gridHeight / 2) * 2 + 1
+    const randomPoint = V(xCossing, yCrossing)
 
-      const steps = getSteps([start, firstCorner, randomPoint, end])
+    const steps = getSteps([start, firstCorner, randomPoint, end])
 
-      const path = {start, steps}
+    const potentialSpots = getPotentialSpots(start, steps)
 
-      Path.create(path)
+    console.log(potentialSpots)
 
-      return path
+    const path = { start, steps, potentialSpots }
+
+    Path.create(path)
+
+    return path
   }
+}
+
+function getPotentialSpots(start, steps) {
+  const spots = []
+
+  const pos = start.clone()
+
+  steps.forEach(step => {
+    if (step.y) {
+      const direction = step.y < 0 ? -1 : 1
+      times(Math.abs(step.y) - 2).forEach(i => spots.push(V(pos.x - 1, (pos.y + direction * (i + 1)))))
+      pos.y = pos.y + step.y
+    }
+    if (step.x) {
+      const direction = step.x < 0 ? -1 : 1
+      times(Math.abs(step.x) - 2).forEach(i => spots.push(V((pos.x + direction * (i + 1 )), pos.y - 1)))
+      pos.x = pos.x + step.x
+    }
+  })
+
+  return uniqBy(spots, vec => vec.serialize())
 }
 
 function getSteps(points) {
   return points.reduce((acc, current, index) => {
     if (!points[index + 1]) return acc
     return acc.concat(getStep(current, points[index + 1]))
-  }, []) 
+  }, [])
 }
 
 function getStep(pointA, pointB) {
