@@ -11,7 +11,7 @@ export default class Enemy extends Entity {
       ...opts
     })
 
-    this.health = 10
+    this.health = 5
 
     this.stepIndex = 0
     this.direction = path.steps[this.stepIndex].normalize()

@@ -6,6 +6,7 @@ import Enemy from './entities/Enemy'
 import V from './lib/vec2'
 import HUD from './lib/HUD'
 import Level from './lib/Level'
+import Game from './lib/Game'
 
 const SPRITESHEET = 'spritesheet.json'
 
@@ -20,17 +21,18 @@ function start() {
 
     app.ticker.add(gameLoop)
 
-    Entity.init(app.stage, textures)
+    const world = new PIXI.Container()
+    app.stage.addChild(world)
 
-    const level = new Level()
-
+    Entity.init(world, textures)
+    const game = new Game()
 
     const hud = new HUD(app.stage)
 
     function gameLoop(dt) {
       Entity.updateAll(dt)
       hud.update(dt)
-      level.update(dt)
+      game.update(dt)
     }
   }
 }

@@ -151,4 +151,9 @@ export default class Entity {
   static findOne(tag) {
     return Entity.find(tag)?.[0]
   }
+
+  static clear() {
+    Entity.world.removeChildren()
+    Entity.children = []
+  }
 }
