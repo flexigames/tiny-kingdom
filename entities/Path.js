@@ -3,9 +3,6 @@ import { times, random, clamp, sample, uniqBy } from 'lodash'
 import Castle from "./Castle"
 import V from "../lib/vec2"
 
-const gridHeight = 18
-const gridWidth = 20
-
 export default class Path extends Entity {
   constructor(x, y, opts = {}) {
     const { horizontal = false } = opts
@@ -14,45 +11,44 @@ export default class Path extends Entity {
     this.sprite.zIndex = 0
   }
 
-  static TILE_SIZE = 7
+  static TILE_SIZE = 8
 
-  static create(path) {
-    const pos = V(path.start.x, path.start.y)
-    path.steps.forEach(step => {
-      if (step.y) {
-        const direction = step.y < 0 ? -1 : 1
-        times(Math.abs(step.y) + 1).forEach(i => new Path(pos.x * Path.TILE_SIZE, (pos.y + direction * i) * Path.TILE_SIZE))
-        pos.y = pos.y + step.y
-      }
-      if (step.x) {
-        const direction = step.x < 0 ? -1 : 1
-        times(Math.abs(step.x) + 1).forEach(i => new Path((pos.x + direction * i) * Path.TILE_SIZE, pos.y * Path.TILE_SIZE, { horizontal: true }))
-        pos.x = pos.x + step.x
-      }
-    })
-    new Castle(pos.x * Path.TILE_SIZE, pos.y * Path.TILE_SIZE + 16)
-  }
+  static generate(grid) {
+    const startY = clamp(random(grid.height), 2, grid.height - 1)
+    const endY = clamp(random(grid.height), 5, grid.height - 1)
 
-  static generate() {
-    const startY = clamp(random(gridHeight), 2, gridHeight)
-    const endY = clamp(random(gridHeight), 5, gridHeight)
-
-    const start = V(-1, startY)
+    const start = V(0, startY)
     const firstCorner = V(1, startY)
-    const end = V(gridWidth, endY)
+    const end = V(grid.width - 2, endY)
 
-    const xCossing = sample(times(gridWidth - 2)) + 2
-    const yCrossing = random(1, gridHeight / 2) * 2 + 1
+    const xCossing = sample(times(grid.width - 4)) + 2
+    const yCrossing = random(1, grid.height - 1)
     const randomPoint = V(xCossing, yCrossing)
 
     const steps = getSteps([start, firstCorner, randomPoint, end])
 
-    const path = { start, steps }
 
-    Path.create(path)
+    fillGrid(start.clone(), steps, grid)
 
-    return path
+    return { start, steps }
   }
+}
+
+function fillGrid(start, steps, grid) {
+  const pos = start.clone()
+  steps.forEach(step => {
+    if (step.y) {
+      const direction = step.y < 0 ? -1 : 1
+      times(Math.abs(step.y) + 1).forEach(i => grid.set(pos.x, pos.y + direction * i, 'path'))
+      pos.y = pos.y + step.y
+    }
+    if (step.x) {
+      const direction = step.x < 0 ? -1 : 1
+      times(Math.abs(step.x) + 1).forEach(i => grid.set(pos.x + direction * i, pos.y, 'path'))
+      pos.x = pos.x + step.x
+    }
+  })
+  grid.set(pos.x, pos.y, 'castle')
 }
 
 function getSteps(points) {
