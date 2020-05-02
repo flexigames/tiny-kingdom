@@ -7,7 +7,7 @@ export default class Entity {
     const {
       tags = [],
       sprite,
-      animationSpeed = 0,
+      animationSpeed = 1000,
       spriteAnchor = [0.5, 1],
       spriteAngle = 0,
     } = opts
@@ -28,9 +28,7 @@ export default class Entity {
     Entity.create(this)
   }
 
-  update(dt) { 
-
-  }
+  update(dt) {}
 
   setPosition(x, y) {
     if (!y) {
@@ -104,7 +102,6 @@ export default class Entity {
     Entity.children = []
   }
 
-
   static changeTexture(sprite, textureName) {
     const texture = Entity.textures[textureName]
     if (isArray(texture)) {
@@ -119,7 +116,7 @@ export default class Entity {
     x,
     y,
     textureName,
-    animationSpeed = 0,
+    animationSpeed = 100,
     spriteAnchor = [0.5, 1],
     spriteAngle = 0
   ) {
@@ -137,7 +134,7 @@ export default class Entity {
     sprite.y = y
     sprite.zIndex = y
     sprite.angle = spriteAngle
-    sprite.scale = {x: Entity.SCALE_FACTOR, y: Entity.SCALE_FACTOR}
+    sprite.scale = { x: Entity.SCALE_FACTOR, y: Entity.SCALE_FACTOR }
 
     sprite.anchor.set(spriteAnchor[0], spriteAnchor[1])
 
