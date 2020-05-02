@@ -10,6 +10,9 @@ import Game from './lib/Game'
 
 const SPRITESHEET = 'spritesheet.json'
 
+const width =  166 * Entity.SCALE_FACTOR
+const height = 144 * Entity.SCALE_FACTOR
+
 function start() {
   const app = createApp()
   app.loader.add(SPRITESHEET).load(setup)
@@ -26,7 +29,7 @@ function start() {
 
     Entity.init(world, textures)
 
-    const game = new Game({stage: app.stage})
+    const game = new Game({stage: app.stage, width, height})
 
 
     function gameLoop(dt) {
@@ -38,8 +41,8 @@ function start() {
 
 function createApp() {
   const app = new PIXI.Application({
-    width: 166 * Entity.SCALE_FACTOR,
-    height: 144 * Entity.SCALE_FACTOR,
+    width,
+    height,
     backgroundColor: 0xfff6d3,
     antialias: false,
   })
