@@ -47,35 +47,12 @@ export default class Path extends Entity {
 
     const steps = getSteps([start, firstCorner, randomPoint, end])
 
-    const potentialSpots = getPotentialSpots(start, steps)
-
-    const path = { start, steps, potentialSpots }
+    const path = { start, steps }
 
     Path.create(path)
 
     return path
   }
-}
-
-function getPotentialSpots(start, steps) {
-  const spots = []
-
-  const pos = start.clone()
-
-  steps.forEach(step => {
-    if (step.y) {
-      const direction = step.y < 0 ? -1 : 1
-      times(Math.abs(step.y) - 2).forEach(i => spots.push(V(pos.x - 1, (pos.y + direction * (i + 1)))))
-      pos.y = pos.y + step.y
-    }
-    if (step.x) {
-      const direction = step.x < 0 ? -1 : 1
-      times(Math.abs(step.x) - 2).forEach(i => spots.push(V((pos.x + direction * (i + 1 )), pos.y - 1)))
-      pos.x = pos.x + step.x
-    }
-  })
-
-  return uniqBy(spots, vec => vec.serialize())
 }
 
 function getSteps(points) {
