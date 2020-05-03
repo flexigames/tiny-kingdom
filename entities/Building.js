@@ -42,7 +42,7 @@ export default class Building extends Entity {
   }
 
   findNeighborTiles() {
-    return this.getNeighborGridPositions.map(position => this.grid.get(position)).fiter(tile => tile)
+    return this.getNeighborGridPositions().map(position => this.grid.get(position)).filter(tile => tile)
   }
 
   place() {

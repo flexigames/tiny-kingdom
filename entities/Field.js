@@ -17,6 +17,27 @@ export default class Field extends Building {
     this.gain = 1
   }
 
+  setGridPosition(x, y) {
+    super.setGridPosition(x, y)
+
+    Entity.find('windmill').forEach(windmill => {
+      windmill.setNeighborMarkings()
+    })
+  }
+
+  place() {
+    super.place()
+    this.neighborTiles = this.findNeighborTiles()
+    Entity.find('windmill').forEach(windmill => {
+      windmill.setNeighborMarkings(true)
+    })
+  }
+
+  hasWindmill() {
+    return this.neighborTiles.some((field) => field?.entity?.tags.includes('windmill'))
+  }
+
+
   setPosition(x, y) {
     super.setPosition(x, y)
     this.sprite.zIndex = 0
@@ -25,6 +46,7 @@ export default class Field extends Building {
   update(dt) {
     super.update(dt)
     if (!this.placed) return
+    if (!this.hasWindmill()) return
 
     this.timer += dt
     if (this.timer > this.delay) {

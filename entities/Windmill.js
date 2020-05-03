@@ -5,7 +5,7 @@ import Grid from '../lib/Grid'
 
 export default class Windmill extends Building {
   constructor(x, y, opts = {}) {
-    super(x, y, { sprite: Windmill.id, offset: V(0, 4), ...opts })
+    super(x, y, { tags: ['windmill'], sprite: Windmill.id, offset: V(0, 4), ...opts })
 
     this.price = Windmill.price
 
@@ -13,15 +13,6 @@ export default class Windmill extends Building {
     this.coinCounter = 0
 
     this.placed = false
-
-
-
-    // Grid.TILE_SIZE
-
-    // const rect = new PIXI.Graphics()
-    // rect.beginFill(0xfff6d3)
-    // rect.drawRect(posX, posY, this.tileSize, this.tileSize)
-    // rect.endFill()
   }
 
   setGridPosition(x, y) {
@@ -32,6 +23,11 @@ export default class Windmill extends Building {
 
   place() {
     super.place()
+    this.setNeighborMarkings(true)
+  }
+
+  destroy() {
+    super.destroy()
     this.setNeighborMarkings(true)
   }
 
@@ -50,12 +46,12 @@ export default class Windmill extends Building {
 
   update(dt) {
     super.update(dt)
-    if (this.placed) {
-      this.coinCounter += dt
-      if (this.coinCounter > this.coinsEvery) {
-        this.coinCounter = 0
-        Entity.level.money++
-      }
+    if (!this.placed) return
+
+    this.coinCounter += dt
+    if (this.coinCounter > this.coinsEvery) {
+      this.coinCounter = 0
+      Entity.level.money++
     }
   }
 
