@@ -24,6 +24,7 @@ export default class Entity {
       spriteAnchor,
       spriteAngle
     )
+    this.sprite.scale = { x: Entity.SCALE_FACTOR, y: Entity.SCALE_FACTOR }
 
     Entity.create(this)
   }
@@ -134,7 +135,6 @@ export default class Entity {
     sprite.y = y
     sprite.zIndex = y
     sprite.angle = spriteAngle
-    sprite.scale = { x: Entity.SCALE_FACTOR, y: Entity.SCALE_FACTOR }
 
     sprite.anchor.set(spriteAnchor[0], spriteAnchor[1])
 
