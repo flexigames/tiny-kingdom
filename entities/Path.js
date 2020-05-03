@@ -44,7 +44,7 @@ function fillGrid(start, steps, grid) {
     }
     if (step.x) {
       const direction = step.x < 0 ? -1 : 1
-      times(Math.abs(step.x) + 1).forEach(i => grid.set(pos.x + direction * i, pos.y, 'path'))
+      times(Math.abs(step.x) + 1).forEach(i => grid.set(pos.x + direction * i, pos.y, 'path', {horizontal: true}))
       pos.x = pos.x + step.x
     }
   })
