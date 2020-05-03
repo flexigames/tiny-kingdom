@@ -10,7 +10,7 @@ import Game from './lib/Game'
 
 const SPRITESHEET = 'spritesheet.json'
 
-const width =  166 * Entity.SCALE_FACTOR
+const width = 166 * Entity.SCALE_FACTOR
 const height = 144 * Entity.SCALE_FACTOR
 
 function start() {
@@ -25,12 +25,12 @@ function start() {
     app.ticker.add(gameLoop)
 
     const world = new PIXI.Container()
+    world.sortableChildren = true
     app.stage.addChild(world)
 
     Entity.init(world, textures)
 
-    const game = new Game({stage: app.stage, width, height})
-
+    const game = new Game({ stage: app.stage, width, height })
 
     function gameLoop(dt) {
       Entity.updateAll(dt)

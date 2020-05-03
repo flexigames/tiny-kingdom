@@ -31,10 +31,10 @@ export default class Enemy extends Entity {
   }
 
   takeDamage(damage) {
-    Entity.level.money++
     this.flashDamage()
     this.health -= damage
     if (this.health <= 0) {
+      Entity.level.money++
       this.destroy()
     }
   }
