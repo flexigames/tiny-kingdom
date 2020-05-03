@@ -1,19 +1,23 @@
 import * as PIXI from 'pixi.js'
+import Building from "./Building"
 import Entity from "./Entity"
 
-export default class Tower extends Entity {
+
+export default class Tower extends Building {
     constructor(x, y, opts = {}) {
-        super(x, y, {sprite: 'tower1', ...opts})
+        super(x, y, {sprite: 'tower', ...opts})
         Entity.level.money -= Tower.price
 
         this.fireRate = 30
-        this.radius = 10
+        this.radius = 15
         this.damage = 1
 
         this.firePause = 0
 
-        // this.createCircle()
+        this.createCircle()
     }
+
+    static id = 'tower'
 
     static price = 10
 
