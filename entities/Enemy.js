@@ -4,14 +4,14 @@ import Path from './Path'
 
 export default class Enemy extends Entity {
   constructor(x, y, opts = {}) {
-    const { path } = opts
+    const { path, health = 1, gain = 1 } = opts
     super(x, y, {
-      sprite: 'big-enemy',
+      sprite: 'enemy',
       tags: ['enemy'],
       ...opts,
     })
 
-    this.health = 5
+    this.health = health
 
     this.stepIndex = 0
     this.direction = path.steps[this.stepIndex].normalize()
@@ -25,6 +25,8 @@ export default class Enemy extends Entity {
     this.baseSpeed = 0.05
     this.boostPercentage = 5
 
+    this.gain = gain
+
     this.speed = this.baseSpeed + Math.random() * this.boostPercentage
 
     this.maxSpeed = this.baseSpeed + this.boostPercentage * this.baseSpeed
@@ -34,7 +36,7 @@ export default class Enemy extends Entity {
     this.flashDamage()
     this.health -= damage
     if (this.health <= 0) {
-      Entity.level.money++
+      Entity.level.money += this.gain
       this.destroy()
     }
   }
