@@ -24,7 +24,7 @@ function start() {
 
     app.ticker.add(gameLoop)
 
-    app.ticker.speed = 10
+    app.ticker.speed = 1
 
     const world = new PIXI.Container()
     world.sortableChildren = true
