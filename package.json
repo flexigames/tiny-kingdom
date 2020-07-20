@@ -17,7 +17,7 @@
     "spritesheet-js": "^1.2.6"
   },
   "dependencies": {
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "pixi.js": "^5.2.3",
     "webfontloader": "^1.6.28"
   },
